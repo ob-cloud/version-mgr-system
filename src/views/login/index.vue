@@ -96,7 +96,7 @@ export default {
     }
     return {
       loginForm: {
-        account: 'onbright',
+        account: 'OnBright',
         password: '12345678'
       },
       loginRules: {

@@ -155,7 +155,7 @@ export default {
     getVersionList () {
       this.tableLoading = true
       SystemAPI.getVersionList(this.search).then(resp => {
-        if (resp.status === 0) {
+        if (resp.status === 200) {
           this.tableData = resp.data
           this.total = resp.total
         }
