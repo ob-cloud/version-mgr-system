@@ -37,7 +37,7 @@
             class="upload-btn"
             ref="uploadBtn"
             accept=".bin"
-            :data="model"
+            :data="uploadData"
             :show-file-list="false"
             :on-change="onUploadChange"
             :before-upload="onBeforeUpload"
@@ -98,6 +98,12 @@ export default {
   computed: {
     layoutHeight () {
       return this.tableHeight + 180
+    },
+    uploadData () {
+      return {
+        materialNo: this.model.materialNo,
+        log: this.model.log,
+      }
     }
   },
   watch: {
@@ -128,7 +134,8 @@ export default {
       }, {
         label: '存储路径',
         prop: 'url',
-        align: 'center'
+        align: 'center',
+        minWidth: '170px'
       }, {
         label: '描述',
         prop: 'log',
@@ -138,7 +145,7 @@ export default {
         prop: 'optTime',
         align: 'center',
         formatter (val) {
-          return val && Helper.parseTime(val)
+          return val && Helper.parseTime(val, '{y}-{m}-{d} {h}:{i}')
         }
       }, {
         label: '操作',
@@ -153,7 +160,7 @@ export default {
     getVersionList () {
       this.tableLoading = true
       SystemAPI.getVersionList(this.search).then(resp => {
-        if (resp.status === 200) {
+        if (resp.status === 0) {
           this.tableData = resp.data.firmware
           this.total = resp.total
         }
@@ -220,6 +227,7 @@ export default {
           type: 'error',
           message: response.message || '上传失败'
         })
+        file.status = 'ready'
       }
     },
     onUploadFail (response, file, fileList) {

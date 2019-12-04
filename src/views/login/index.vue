@@ -2,7 +2,7 @@
   <section class="ura-login">
     <div class="ura-login-container">
       <div class="ura-login-header">
-        <h2>固件版本管理系统</h2>
+        <h2>版本管理系统</h2>
       </div>
       <el-form class="ura-login-body" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
         <el-form-item prop="account">
