@@ -1,6 +1,6 @@
-export const AUTHORITY_KEY = 'mip.web.sys:auth:key'
-export const USER_TOKEN_KEY = 'mip.web.sys:user:token'
-export const USER_ID_KEY = 'mip.web.sys:user:id'
+export const AUTHORITY_KEY = 'vms.web.sys:auth:key'
+export const USER_TOKEN_KEY = 'vms.web.sys:user:token'
+export const USER_ID_KEY = 'vms.web.sys:user:id'
 
 
 export const PAGINATION_PAGENO = 1
