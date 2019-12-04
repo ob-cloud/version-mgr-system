@@ -134,18 +134,17 @@ export default {
       }, {
         label: '存储路径',
         prop: 'url',
-        align: 'center',
-        minWidth: '170px'
+        align: 'center'
       }, {
         label: '描述',
         prop: 'log',
         align: 'center'
       }, {
-        label: '更新时间',
+        label: '上传时间',
         prop: 'optTime',
         align: 'center',
         formatter (val) {
-          return val && Helper.parseTime(val, '{y}-{m}-{d} {h}:{i}')
+          return val && Helper.parseTime(val)
         }
       }, {
         label: '操作',
@@ -222,6 +221,12 @@ export default {
       if (response.status === 0) {
         this.dialogVisible = false
         this.getVersionList()
+      } else if (response.status === 900) {
+        this.$message({
+          type: 'error',
+          message: response.message || '文件名格式不正确，请按照约定的格式命名文件'
+        })
+        file.status = 'ready'
       } else {
         this.$message({
           type: 'error',
