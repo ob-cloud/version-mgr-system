@@ -8,6 +8,7 @@
       v-loading="tableLoading"
       :pageTotal="total"
       :pageSize="search.pageSize"
+      :pageNo="search.pageNo"
       @on-current-page-change="onCurrentChange"
       @on-page-size-change="onSizeChange">
 
@@ -153,7 +154,7 @@ export default {
       this.tableLoading = true
       SystemAPI.getVersionList(this.search).then(resp => {
         if (resp.status === 200) {
-          this.tableData = resp.data
+          this.tableData = resp.data.firmware
           this.total = resp.total
         }
         this.tableLoading = false
