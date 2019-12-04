@@ -1,5 +1,5 @@
 <template>
-  <div class="device smart  ui-container" :style="{height: layoutHeight + 'px'}">
+  <div class="device smart  ui-container">
     <base-table
       :height="tableHeight"
       :tableData="tableData"
@@ -120,7 +120,7 @@ export default {
   },
   methods: {
     fixLayout () {
-      this.tableHeight = Helper.calculateTableHeight() - 20
+      this.tableHeight = Helper.calculateTableHeight() - 20 - 10
     },
     getColumns () {
       return [{
@@ -279,6 +279,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  .ui-container{
+    margin: 20px;
+    border-radius: 14px;
+  }
   .upload-btn{
     float: right;
   }
