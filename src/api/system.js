@@ -2,7 +2,7 @@
  * @Author: eamiear
  * @Date: 2019-02-06 21:34:24
  * @Last Modified by: eamiear
- * @Last Modified time: 2019-12-04 11:47:45
+ * @Last Modified time: 2019-12-04 13:52:21
  */
 
 import {request} from '@/common/request'
@@ -20,7 +20,7 @@ const SystemAPI = {
     return request.delete('/oauth/token/' + accessToken)
   },
   getVersionList (firmware = {}) {
-    return request.post('/consumer/facade/getFirmWare', {
+    return request.post('/consumer/image/getFirmWare', {
       ...firmware
     })
   },
