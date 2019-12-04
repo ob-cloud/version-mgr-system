@@ -2,7 +2,7 @@
  * @Author: eamiear
  * @Date: 2019-02-06 21:34:24
  * @Last Modified by: eamiear
- * @Last Modified time: 2019-12-04 10:54:09
+ * @Last Modified time: 2019-12-04 11:21:14
  */
 
 import {request} from '@/common/request'
@@ -20,13 +20,12 @@ const SystemAPI = {
     return request.delete('/oauth/token/' + accessToken)
   },
   getVersionList (firmware = {}) {
-    return request.get('/facade/getFirmWare', {
-      // CMD: 'get_firmware',
+    return request.get('/consumer/facade/getFirmWare', {
       firmware: JSON.stringify(firmware)
     })
   },
   deleteVersion (id) {
-    return request.postForm('/image/deleteFirmWare', {
+    return request.postForm('/consumer/image/deleteFirmWare', {
       id
     })
   }

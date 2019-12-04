@@ -30,13 +30,13 @@
         <el-form-item label="描述" prop="log">
           <el-input v-model="model.log" placeholder="输入描述信息"></el-input>
         </el-form-item>
-        <el-form-item label="文件" prop="file">
+        <el-form-item label="文件" prop="filepick">
           <span class="file-name">{{fileName}}</span>
           <el-upload
             class="upload-btn"
             ref="uploadBtn"
             accept=".bin"
-            :data="uploadData"
+            :data="model"
             :show-file-list="false"
             :on-change="onUploadChange"
             :before-upload="onBeforeUpload"
@@ -79,15 +79,12 @@ export default {
       model: {
         materialNo: '',
         log: '',
-        file: ''
+        filepick: ''
       },
       modelRules: {
         materialNo: [{ required: true, message: '料号不能为空', trigger: 'blur' }],
         log: [{ required: true, message: '描述信息不能为空', trigger: 'blur' }],
-        file: [{ required: true, message: '文件不能为空', trigger: 'change' }],
-      },
-      uploadData: {
-        access_token: ''
+        filepick: [{ required: true, message: '文件不能为空', trigger: 'change' }],
       },
       fileName: '请选择文件'
     }
@@ -180,7 +177,6 @@ export default {
       const that = this
       this.$refs.upload.validate(valid => {
         if (valid) {
-          that.uploadData = {...that.uploadData, ...that.model}
           that.$refs.uploadBtn.submit()
         }
       })
@@ -188,9 +184,9 @@ export default {
     onUploadChange (file, fileList) {
       if (file) {
         this.fileName = file.name
-        this.model.file = file.name
+        this.model.filepick = file.name
       } else {
-        this.model.file = ''
+        this.model.filepick = ''
       }
     },
     onBeforeUpload (file) {
@@ -215,8 +211,15 @@ export default {
     },
     onUploadSuccess (response, file, fileList) {
       this.loader && this.loader.close()
-      this.dialogVisible = false
-      this.getVersionList()
+      if (response.status === 0) {
+        this.dialogVisible = false
+        this.getVersionList()
+      } else {
+        this.$message({
+          type: 'error',
+          message: response.message || '上传失败'
+        })
+      }
     },
     onUploadFail (response, file, fileList) {
       this.loader && this.loader.close()
