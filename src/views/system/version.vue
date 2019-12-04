@@ -156,7 +156,7 @@ export default {
       this.tableLoading = true
       SystemAPI.getVersionList(this.search).then(resp => {
         if (resp.status === 0) {
-          this.tableData = resp.data.records
+          this.tableData = resp.data
           this.total = resp.total
         }
         this.tableLoading = false
@@ -232,7 +232,7 @@ export default {
         type: 'warning',
         closeOnClickModal: false
       }).then(() => {
-        this.doRemove(row)
+        this.doRemove(row.id)
       }).catch(() => {
         console.log('cancel')
       })

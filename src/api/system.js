@@ -2,7 +2,7 @@
  * @Author: eamiear
  * @Date: 2019-02-06 21:34:24
  * @Last Modified by: eamiear
- * @Last Modified time: 2019-12-04 10:40:33
+ * @Last Modified time: 2019-12-04 10:54:09
  */
 
 import {request} from '@/common/request'
@@ -19,61 +19,16 @@ const SystemAPI = {
   logout (accessToken) {
     return request.delete('/oauth/token/' + accessToken)
   },
-  reNewAcessToken (oldAccessToken) {
-    return request.post({
-      url: 'renewToken',
-      params: {accessToken: oldAccessToken}
-    })
-  },
-  resetPassword (pwd = {}) {
-    return request.get('/consumer/common', {
-      CMD: 'reset_smarthome_pwd',
-      pwd: JSON.stringify(pwd)
-    })
-  },
-  getSysLogs (log = {}) {
-    return request.get('/consumer/common', {
-      CMD: 'get_sys_log',
-      log: JSON.stringify(log)
-    })
-  },
-  exportsLogs (beginTime, endTime) {
-    return request.getRequestUrl('/consumer/facade/getExportLog', {beginTime, endTime})
-  },
-  getUserPrivilege () {
-    return request.get('/consumer/common', {
-      CMD: 'get_user_privilege'
-    })
-  },
   getVersionList (firmware = {}) {
     return request.get('/facade/getFirmWare', {
       // CMD: 'get_firmware',
       firmware: JSON.stringify(firmware)
     })
-    // return new Promise(resolve => {
-    //   resolve({
-    //     status: 0,
-    //     data: {
-    //       records: [{
-    //         id: 1,
-    //         materialNo: 'BOOXBokjam',
-    //         versionNo: '0101001',
-    //         url: '/xxx/ss/s/sss.bin',
-    //         optTime: 1575426104985
-    //       }, {
-    //         id: 2,
-    //         materialNo: 'WIFIEN9q2l',
-    //         versionNo: '0101001',
-    //         url: '/xxx/ss/s/sss.bin',
-    //         optTime: 1575426104985
-    //       }]
-    //     },
-    //     total: 10
-    //   })
-    // })
   },
-  deleteVersion () {
-
+  deleteVersion (id) {
+    return request.postForm('/image/deleteFirmWare', {
+      id
+    })
   }
 }
 export default SystemAPI
