@@ -243,7 +243,7 @@ export default {
       })
     },
     handleRemove (row) {
-      this.$confirm('确认删除料号？', '确认提示', {
+      this.$confirm('确认删除该记录？', '确认提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
