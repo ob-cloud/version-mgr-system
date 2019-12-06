@@ -184,6 +184,13 @@ export default {
       const that = this
       this.$refs.upload.validate(valid => {
         if (valid) {
+          if (!that.$refs.uploadBtn.uploadFiles.length) {
+            return this.$message({
+              title: false,
+              type: 'warning',
+              message: '请重新选择文件'
+            })
+          }
           that.$refs.uploadBtn.submit()
         }
       })
@@ -226,13 +233,15 @@ export default {
           type: 'error',
           message: response.message || '文件名格式不正确，请按照约定的格式命名文件'
         })
-        file.status = 'ready'
+        // file.status = 'ready'
+        this.$refs.uploadBtn.clearFiles()
       } else {
         this.$message({
           type: 'error',
           message: response.message || '上传失败'
         })
-        file.status = 'ready'
+        // file.status = 'ready'
+        this.$refs.uploadBtn.clearFiles()
       }
     },
     onUploadFail (response, file, fileList) {
