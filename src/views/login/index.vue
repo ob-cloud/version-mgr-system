@@ -96,7 +96,7 @@ export default {
     }
     return {
       loginForm: {
-        account: 'OnBright',
+        account: '13828486833',
         password: '12345678'
       },
       loginRules: {
@@ -113,7 +113,15 @@ export default {
           this.loading = true
           this.$store.dispatch('loginByAccount', this.loginForm).then(response => {
             this.loading = false
-            this.$router.push({path: '/'})
+            if (!response) {
+              this.$message({
+                message: '登录失败，账号或密码错误',
+                type: 'error'
+              })
+              this.$router.push({path: '/login'})
+            } else {
+              this.$router.push({path: '/'})
+            }
           }).catch(() => {
             this.loading = false
           })

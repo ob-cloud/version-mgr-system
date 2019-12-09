@@ -17,9 +17,9 @@ const service = axios.create({
   timeout: 16000
 })
 service.interceptors.request.use(config => {
-  // if (typeof config.params === 'object' && Object.keys(config.params).length && Storage.getToken()) {
-  //   config.params.access_token = Storage.getToken()
-  // }
+  if (typeof config.params === 'object' && Storage.getToken()) {
+    config.params.access_token = Storage.getToken()
+  }
   return config
 }, error => {
   Promise.reject(error)
