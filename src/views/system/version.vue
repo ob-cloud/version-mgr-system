@@ -54,6 +54,24 @@
         <el-button type="primary" @click="handleUpload()">上传</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog  v-if="proveDialogVisible" top="10%" width="660px" title="固件校验" :visible.sync="proveDialogVisible" :close-on-click-modal="false">
+      <el-form class="ob-form" ref="prove" autoComplete="on" :rules="proveRules" :model="proveModel" label-width="80px" style="width: 90%; margin: 0 auto;">
+        <el-form-item label="手机号码" prop="mobile">
+          <el-input v-model="proveModel.mobile" placeholder="输入手机号码"></el-input>
+        </el-form-item>
+        <el-form-item label="OBOX" prop="obox">
+          <!-- <el-input v-model="proveModel.obox" placeholder=""></el-input> -->
+          <el-select v-model="proveModel.obox" style="width: 100%;" clearable>
+            <!-- <el-option :label="i" :value="''+ (i-1)"></el-option> -->
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="proveDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="doProve()">确认</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -76,6 +94,7 @@ export default {
       },
       tableData: [],
       columns: [],
+      // 上传modal
       dialogVisible: false,
       model: {
         materialNo: '',
@@ -87,7 +106,17 @@ export default {
         log: [{ required: true, message: '描述信息不能为空', trigger: 'blur' }],
         filepick: [{ required: true, message: '文件不能为空', trigger: 'change' }],
       },
-      fileName: '请选择文件'
+      fileName: '请选择文件',
+      // 校验
+      proveDialogVisible: false,
+      proveModel: {
+        mobile: '',
+        obox: ''
+      },
+      proveRules: {
+        mobile: [{ required: true, message: '手机号码不能为空', trigger: 'blur' }],
+        obox: [{ required: true, message: '请选择obox', trigger: 'blur' }],
+      }
     }
   },
   components: { BaseTable },
@@ -140,6 +169,10 @@ export default {
         prop: 'log',
         align: 'center'
       }, {
+        label: '状态',
+        prop: 'status',
+        align: 'center'
+      }, {
         label: '上传时间',
         prop: 'optTime',
         align: 'center',
@@ -154,7 +187,15 @@ export default {
       }]
     },
     getToolboxRender (h, row) {
-      return [<el-button size="tiny" icon="obicon obicon-trash" title='删除' onClick={() => this.handleRemove(row)}></el-button>]
+      const toolbox = []
+      const status = row.status || 2 // 1 - 已发布， 2 - 待校验， 3 - 校验成功、未发布， 4 - 校验失败
+      const remove = <el-button class="colors" size="tiny" type="danger" icon="obicon obicon-trash" title='删除' onClick={() => this.handleRemove(row)}></el-button>
+      const release = <el-button class="colors" size="tiny" type="success" icon="obicon obicon-send" title='发布' onClick={() => this.handleRelease(row)}></el-button>
+      const prove = <el-button class="colors" size="tiny" type="warning" icon="obicon obicon-interaction" title='校验' onClick={() => this.handleProve(row)}></el-button>
+      status === 2 && toolbox.push(prove) // 待校验
+      status === 3 && toolbox.push(release) // 待发布
+      toolbox.push(remove)
+      return toolbox
     },
     getVersionList () {
       this.tableLoading = true
@@ -283,6 +324,16 @@ export default {
           message: '服务异常'
         })
       })
+    },
+    handleRelease (row) {
+      console.log('release')
+    },
+    handleProve (row) {
+      console.log('prove')
+      this.proveDialogVisible = true
+    },
+    doProve () {
+
     }
   }
 }
@@ -295,4 +346,23 @@ export default {
   .upload-btn{
     float: right;
   }
+</style>
+<style lang="scss">
+  // .colors{
+  //   &{
+  //     color: #FFFFFF!important;
+  //   }
+  //   &.el-button--warning {
+  //     background-color: #E6A23C!important;
+  //     border-color: #E6A23C!important;
+  //   }
+  //   &.el-button--success {
+  //     background-color: #67C23A!important;
+  //     border-color: #67C23A!important;
+  //   }
+  //   &.el-button--danger {
+  //     background-color: #F56C6C!important;
+  //     border-color: #F56C6C!important;
+  //   }
+  // }
 </style>
