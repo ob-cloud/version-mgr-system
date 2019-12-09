@@ -2,23 +2,21 @@
 
 > `http://localhost:8201/common`
 
-## ====== 栋 begin ======
-
-### 登录
+## 登录
 
 ```js
 method: post
 url: /oauth/token
 ```
 
-### 登出
+## 登出
 
 ```js
 method: delete
 url: /oauth/token/{access_token}
 ```
 
-### 获取列表
+## 获取列表
 
 ```js
 method: get
@@ -29,7 +27,7 @@ url:/consumer/image/getFirmWare
 }
 ```
 
-### 删除记录
+## 删除记录
 
 ```js
 method: post
@@ -40,7 +38,7 @@ url: /consumer/image/deleteFirmWare
 }
 ```
 
-### 上传
+## 上传
 
 ```js
 method: post
