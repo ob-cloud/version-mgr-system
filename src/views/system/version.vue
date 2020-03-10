@@ -226,7 +226,6 @@ export default {
       this.$refs.upload.validate(valid => {
         if (valid) {
           if (that.$refs.uploadBtn.uploadFiles.length > 1) {
-            console.log(that.$refs.uploadBtn.uploadFiles.pop())
             that.$refs.uploadBtn.uploadFiles = [that.$refs.uploadBtn.uploadFiles.pop()]
           }
           if (!that.$refs.uploadBtn.uploadFiles.length) {
